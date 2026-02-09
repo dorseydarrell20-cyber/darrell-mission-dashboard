@@ -24,66 +24,76 @@ export default function DailyView({ todayHabits, log, onToggle, streak }) {
       {/* MVD */}
       <MvdIndicator todayHabits={todayHabits} completedIds={log.completed} />
 
-      {/* Progress */}
-      <ProgressBars
-        habitsComplete={xp.habitsComplete}
-        habitsTotal={xp.habitsTotal}
-        xpEarned={xp.xpEarned}
-        xpPossibleMax={xp.xpPossibleMax}
-        keystoneBonus={xp.keystoneBonus}
-      />
+      {/* Progress + XP counter card */}
+      <div className="glass rounded-2xl p-4 space-y-4">
+        <ProgressBars
+          habitsComplete={xp.habitsComplete}
+          habitsTotal={xp.habitsTotal}
+          xpEarned={xp.xpEarned}
+          xpPossibleMax={xp.xpPossibleMax}
+          keystoneBonus={xp.keystoneBonus}
+        />
 
-      {/* XP counter */}
-      <div className="flex items-center justify-center gap-3 py-1">
-        <span className="text-2xl font-bold text-white">{xp.xpEarned}</span>
-        <span className="text-gray-500 text-sm">/ {xp.xpPossibleMax} XP</span>
-        {xp.keystoneBonus && (
-          <span className="text-xs px-2 py-0.5 rounded bg-amber-900/50 text-amber-400 font-medium">
-            &#9733; 1.5x Keystone Bonus
-          </span>
-        )}
+        {/* XP counter */}
+        <div className="flex items-center justify-center gap-3 pt-1">
+          <span className="text-3xl font-bold text-white tracking-tight">{xp.xpEarned}</span>
+          <span className="text-white/25 text-sm font-light">/ {xp.xpPossibleMax} XP</span>
+          {xp.keystoneBonus && (
+            <span className="text-[10px] px-2.5 py-1 rounded-lg bg-amber-500/15 text-amber-400 font-semibold ring-1 ring-amber-500/20">
+              &#9733; 1.5x KEYSTONE
+            </span>
+          )}
+        </div>
       </div>
 
       {/* Habit packs */}
-      {PACK_ORDER.filter(p => grouped[p]).map(packKey => {
-        const pack = PACKS[packKey]
-        const habits = grouped[packKey]
-        const done = habits.filter(h => log.completed.includes(h.id)).length
-        const isCollapsed = collapsed[packKey]
+      <div className="glass rounded-2xl p-4 space-y-3">
+        {PACK_ORDER.filter(p => grouped[p]).map(packKey => {
+          const pack = PACKS[packKey]
+          const habits = grouped[packKey]
+          const done = habits.filter(h => log.completed.includes(h.id)).length
+          const allDone = done === habits.length
+          const isCollapsed = collapsed[packKey]
 
-        return (
-          <div key={packKey}>
-            <button
-              onClick={() => toggleCollapse(packKey)}
-              className="w-full flex items-center gap-2 px-1 py-1.5 text-left group"
-            >
-              <span>{pack.emoji}</span>
-              <span className="text-sm font-medium text-gray-300 group-hover:text-white transition-colors">
-                {pack.name}
-              </span>
-              <span className="text-xs text-gray-500">{done}/{habits.length}</span>
-              <svg
-                className={`w-3 h-3 text-gray-500 ml-auto transition-transform ${isCollapsed ? '' : 'rotate-180'}`}
-                fill="none" viewBox="0 0 24 24" stroke="currentColor"
+          return (
+            <div key={packKey}>
+              <button
+                onClick={() => toggleCollapse(packKey)}
+                className="w-full flex items-center gap-2.5 px-1 py-2 text-left group"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
-            {!isCollapsed && (
-              <div className="space-y-1.5 ml-1">
-                {habits.map(habit => (
-                  <HabitItem
-                    key={habit.id}
-                    habit={habit}
-                    completed={log.completed.includes(habit.id)}
-                    onToggle={() => onToggle(habit.id)}
-                  />
-                ))}
-              </div>
-            )}
-          </div>
-        )
-      })}
+                <span className="text-base">{pack.emoji}</span>
+                <span className="text-sm font-medium text-white/70 group-hover:text-white transition-colors">
+                  {pack.name}
+                </span>
+                <span className={`text-xs font-mono ${
+                  allDone ? 'text-emerald-400' : 'text-white/25'
+                }`}>
+                  {done}/{habits.length}
+                </span>
+                {allDone && <span className="text-emerald-400 text-xs">&#10003;</span>}
+                <svg
+                  className={`w-3.5 h-3.5 text-white/20 ml-auto transition-transform duration-200 ${isCollapsed ? '-rotate-90' : ''}`}
+                  fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {!isCollapsed && (
+                <div className="space-y-1.5 pb-1">
+                  {habits.map(habit => (
+                    <HabitItem
+                      key={habit.id}
+                      habit={habit}
+                      completed={log.completed.includes(habit.id)}
+                      onToggle={() => onToggle(habit.id)}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+          )
+        })}
+      </div>
     </div>
   )
 }

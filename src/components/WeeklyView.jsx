@@ -3,16 +3,16 @@ import { isDayComplete } from '../utils/scoring'
 
 export default function WeeklyView({ dayLogs, today }) {
   const weekDates = getWeekDates(today)
-  const workdays = weekDates.slice(0, 5) // Mon-Fri
+  const workdays = weekDates.slice(0, 5)
   const completeDays = workdays.filter(d => dayLogs[d] && isDayComplete(dayLogs[d])).length
 
   return (
     <div>
       <div className="flex items-center justify-between mb-3">
-        <h3 className="text-sm font-medium text-gray-400">This Week</h3>
-        <span className="text-sm font-mono text-gray-300">{completeDays}/5 days</span>
+        <h3 className="text-[10px] font-semibold text-white/40 uppercase tracking-widest">This Week</h3>
+        <span className="text-sm font-mono text-white/60">{completeDays}/5</span>
       </div>
-      <div className="flex gap-2">
+      <div className="flex gap-1.5">
         {weekDates.map(dateStr => {
           const log = dayLogs[dateStr]
           const complete = log && isDayComplete(log)
@@ -22,24 +22,24 @@ export default function WeeklyView({ dayLogs, today }) {
 
           return (
             <div key={dateStr} className="flex-1 text-center">
-              <div className="text-[10px] text-gray-500 mb-1">{dayName(dateStr)}</div>
-              <div className={`w-8 h-8 mx-auto rounded-full flex items-center justify-center text-xs border ${
+              <div className="text-[9px] text-white/30 mb-1.5 font-medium">{dayName(dateStr)}</div>
+              <div className={`w-9 h-9 mx-auto rounded-xl flex items-center justify-center text-xs transition-all duration-200 ${
                 isToday
-                  ? 'border-blue-500 bg-blue-950/50'
+                  ? 'ring-1 ring-blue-500/50 bg-blue-500/10 glow-blue'
                   : complete
-                    ? 'border-emerald-600 bg-emerald-950/50'
+                    ? 'bg-emerald-500/15 ring-1 ring-emerald-500/30'
                     : hasPassed && hasLog
-                      ? 'border-red-800 bg-red-950/30'
-                      : 'border-gray-800 bg-gray-900/30'
+                      ? 'bg-red-500/10 ring-1 ring-red-500/20'
+                      : 'bg-white/[0.03] ring-1 ring-white/5'
               }`}>
                 {complete ? (
-                  <span className="text-emerald-400">&#10003;</span>
+                  <span className="text-emerald-400 font-medium">&#10003;</span>
                 ) : hasPassed && hasLog ? (
-                  <span className="text-red-400">&#10005;</span>
+                  <span className="text-red-400/70">&#10005;</span>
                 ) : isToday ? (
-                  <span className="text-blue-400">&#8226;</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
                 ) : (
-                  <span className="text-gray-600">&#8226;</span>
+                  <span className="w-1 h-1 rounded-full bg-white/10" />
                 )}
               </div>
             </div>

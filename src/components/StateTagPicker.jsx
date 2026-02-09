@@ -9,11 +9,11 @@ export default function StateTagPicker({ value, onChange }) {
     <div className="relative">
       <button
         onClick={() => setOpen(!open)}
-        className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-gray-800 hover:bg-gray-750 border border-gray-700 text-sm transition-colors"
+        className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl glass-light glass-hover text-sm transition-all duration-200"
       >
         <span>{current ? current.emoji : '\u{1F3AF}'}</span>
-        <span className="text-gray-300">{current ? current.label : 'State'}</span>
-        <svg className="w-3 h-3 text-gray-500 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <span className="text-white/60 text-xs">{current ? current.label : 'State'}</span>
+        <svg className="w-3 h-3 text-white/20 ml-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
         </svg>
       </button>
@@ -21,11 +21,11 @@ export default function StateTagPicker({ value, onChange }) {
       {open && (
         <>
           <div className="fixed inset-0 z-10" onClick={() => setOpen(false)} />
-          <div className="absolute top-full mt-1 right-0 z-20 bg-gray-800 border border-gray-700 rounded-lg shadow-xl py-1 min-w-[160px]">
+          <div className="absolute top-full mt-2 right-0 z-20 glass rounded-xl shadow-2xl py-1.5 min-w-[170px] ring-1 ring-white/10">
             {value && (
               <button
                 onClick={() => { onChange(null); setOpen(false) }}
-                className="w-full text-left px-3 py-1.5 text-sm text-gray-400 hover:bg-gray-700"
+                className="w-full text-left px-3.5 py-2 text-xs text-white/40 hover:text-white/70 hover:bg-white/5 transition-colors"
               >
                 Clear
               </button>
@@ -34,12 +34,12 @@ export default function StateTagPicker({ value, onChange }) {
               <button
                 key={tag.label}
                 onClick={() => { onChange(tag.label); setOpen(false) }}
-                className={`w-full text-left px-3 py-1.5 text-sm hover:bg-gray-700 flex items-center gap-2 ${
-                  value === tag.label ? 'text-white' : 'text-gray-300'
+                className={`w-full text-left px-3.5 py-2 text-sm hover:bg-white/5 flex items-center gap-2.5 transition-colors ${
+                  value === tag.label ? 'text-white' : 'text-white/60'
                 }`}
               >
                 <span>{tag.emoji}</span>
-                <span>{tag.label}</span>
+                <span className="text-xs">{tag.label}</span>
               </button>
             ))}
           </div>
