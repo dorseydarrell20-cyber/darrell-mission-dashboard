@@ -1,123 +1,324 @@
 @import "tailwindcss";
 
+/* ═══════════════════════════════════════════
+   RUNESCAPE THEME — MISSION DASHBOARD
+   ═══════════════════════════════════════════ */
+
+/* ── Color Tokens ── */
 @theme {
-  --color-pack-builder: #3b82f6;
-  --color-pack-revenue: #10b981;
-  --color-pack-creator: #f59e0b;
-  --color-pack-artist: #a855f7;
-  --color-pack-body: #ef4444;
-  --color-pack-systems: #6b7280;
+  --color-rs-bg: #1a1108;
+  --color-rs-panel: #342a1e;
+  --color-rs-panel-light: #3d3225;
+  --color-rs-border: #6b5626;
+  --color-rs-border-light: #8b7432;
+  --color-rs-gold: #c8a94e;
+  --color-rs-gold-bright: #ffd700;
+  --color-rs-parchment: #d4c4a0;
+  --color-rs-parchment-dark: #b8a88a;
+  --color-rs-text: #b8a88a;
+  --color-rs-text-dim: #7a6c56;
+  --color-rs-red: #8b2020;
+  --color-rs-green: #2d7a2d;
+  --color-rs-xp-green: #16a34a;
+  --color-pack-builder: #4a9eff;
+  --color-pack-revenue: #50d890;
+  --color-pack-creator: #ffb340;
+  --color-pack-artist: #c084fc;
+  --color-pack-body: #f87171;
+  --color-pack-systems: #94a3b8;
 }
 
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-display: swap;
-  src: url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-}
-
+/* ── Base ── */
 body {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: 'Cinzel', serif;
+  background: #1a1108;
+  color: #b8a88a;
+  margin: 0;
+  min-height: 100vh;
   overflow-x: hidden;
 }
 
-/* Glass card */
-.glass {
-  background: rgba(15, 15, 25, 0.65);
-  backdrop-filter: blur(16px) saturate(1.2);
-  -webkit-backdrop-filter: blur(16px) saturate(1.2);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+/* ── Page Background: Dark Stone Texture ── */
+.rs-page-bg {
+  min-height: 100vh;
+  background:
+    repeating-linear-gradient(0deg, transparent, rgba(0,0,0,0.04) 2px, transparent 4px),
+    repeating-linear-gradient(90deg, transparent, rgba(0,0,0,0.04) 2px, transparent 4px),
+    radial-gradient(ellipse at 20% 50%, rgba(60,40,15,0.4) 0%, transparent 70%),
+    radial-gradient(ellipse at 80% 50%, rgba(60,40,15,0.3) 0%, transparent 70%),
+    linear-gradient(180deg, #1a1108 0%, #211710 40%, #1a1108 100%);
 }
 
-.glass-light {
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+/* ── Ornate Panel ── */
+.rs-panel {
+  position: relative;
+  background: linear-gradient(180deg, #3d3225 0%, #352b1f 50%, #2d2419 100%);
+  border: 2px solid #6b5626;
+  border-radius: 4px;
+  box-shadow:
+    inset 0 1px 0 rgba(200, 169, 78, 0.15),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(0, 0, 0, 0.8),
+    0 0 0 3px #3d3225,
+    0 0 0 4px rgba(0, 0, 0, 0.5),
+    0 4px 16px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
 }
 
-.glass-hover:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.12);
+.rs-panel-title {
+  background: linear-gradient(180deg, #4a3c28 0%, #3d3020 100%);
+  border-bottom: 2px solid #6b5626;
+  padding: 8px 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: inset 0 1px 0 rgba(200, 169, 78, 0.1);
 }
 
-/* Glow effects */
-.glow-blue {
-  box-shadow: 0 0 20px rgba(59, 130, 246, 0.15), 0 0 60px rgba(59, 130, 246, 0.05);
-}
-.glow-emerald {
-  box-shadow: 0 0 20px rgba(16, 185, 129, 0.15), 0 0 60px rgba(16, 185, 129, 0.05);
-}
-.glow-amber {
-  box-shadow: 0 0 20px rgba(245, 158, 11, 0.15), 0 0 60px rgba(245, 158, 11, 0.05);
-}
-.glow-purple {
-  box-shadow: 0 0 20px rgba(168, 85, 247, 0.15), 0 0 60px rgba(168, 85, 247, 0.05);
+.rs-panel-body {
+  padding: 12px;
 }
 
-/* Animated gradient bar */
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-.bar-shimmer {
-  background-size: 200% 100%;
-  animation: shimmer 3s ease-in-out infinite;
+/* ── Gold Text ── */
+.rs-gold {
+  color: #c8a94e;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
 }
 
-/* Subtle pulse for streaks */
-@keyframes soft-pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.7; }
-}
-.pulse-slow {
-  animation: soft-pulse 3s ease-in-out infinite;
+.rs-gold-bright {
+  color: #ffd700;
+  text-shadow: 0 0 6px rgba(255, 215, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.8);
 }
 
-/* Wallpaper background */
-.wallpaper-bg {
-  position: fixed;
+/* ── RuneScape Buttons ── */
+.rs-btn {
+  background: linear-gradient(180deg, #5c4a2a 0%, #4a3a1e 50%, #3d2e16 100%);
+  border: 2px solid #6b5626;
+  border-radius: 3px;
+  color: #c8a94e;
+  padding: 6px 16px;
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  box-shadow:
+    inset 0 1px 0 rgba(200, 169, 78, 0.2),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+    0 2px 4px rgba(0, 0, 0, 0.3);
+  transition: all 0.15s;
+}
+.rs-btn:hover {
+  background: linear-gradient(180deg, #6b5626 0%, #5c4a2a 50%, #4a3a1e 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(200, 169, 78, 0.3),
+    0 0 12px rgba(200, 169, 78, 0.2),
+    0 2px 4px rgba(0, 0, 0, 0.3);
+}
+.rs-btn:active {
+  background: linear-gradient(180deg, #3d2e16 0%, #4a3a1e 50%, #5c4a2a 100%);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+.rs-btn-danger {
+  border-color: #6b2020;
+  color: #e05050;
+}
+.rs-btn-danger:hover {
+  box-shadow: 0 0 12px rgba(200, 50, 50, 0.2), 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* ── Segmented XP Bar ── */
+.rs-xp-track {
+  height: 22px;
+  background: linear-gradient(180deg, #1a1108 0%, #231a0f 100%);
+  border: 2px solid #6b5626;
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+  box-shadow:
+    inset 0 2px 6px rgba(0, 0, 0, 0.6),
+    0 1px 0 rgba(200, 169, 78, 0.1);
+}
+.rs-xp-fill {
+  height: 100%;
+  background: linear-gradient(180deg, #4ade80 0%, #22c55e 30%, #16a34a 60%, #15803d 100%);
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+.rs-xp-fill::after {
+  content: '';
+  position: absolute;
   inset: 0;
-  z-index: -2;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent calc(10% - 1px),
+    rgba(0, 0, 0, 0.25) 10%,
+    transparent calc(10% + 1px)
+  );
 }
-.wallpaper-overlay {
-  position: fixed;
+.rs-xp-fill-gold {
+  background: linear-gradient(180deg, #ffd700 0%, #daa520 30%, #b8860b 60%, #996515 100%);
+}
+.rs-xp-text {
+  position: absolute;
   inset: 0;
-  z-index: -1;
-  background: radial-gradient(ellipse at top, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  color: white;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9), 0 0 2px rgba(0,0,0,1);
+  z-index: 2;
+  letter-spacing: 0.5px;
 }
 
-/* Scrollbar */
-::-webkit-scrollbar {
-  width: 5px;
+/* ── Quest Items ── */
+.rs-quest {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 10px;
+  border-bottom: 1px solid rgba(107, 86, 38, 0.2);
+  cursor: pointer;
+  transition: background 0.15s;
+  user-select: none;
 }
-::-webkit-scrollbar-track {
-  background: transparent;
+.rs-quest:last-child { border-bottom: none; }
+.rs-quest:hover {
+  background: rgba(200, 169, 78, 0.06);
 }
+.rs-quest-done {
+  background: rgba(200, 169, 78, 0.05);
+}
+
+.rs-quest-check {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #6b5626;
+  border-radius: 2px;
+  background: #1a1108;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+.rs-quest-done .rs-quest-check {
+  background: linear-gradient(135deg, #b8860b, #daa520);
+  border-color: #c8a94e;
+  box-shadow: 0 0 6px rgba(200, 169, 78, 0.3);
+}
+
+/* ── Category Header ── */
+.rs-category {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(107, 86, 38, 0.3);
+  transition: background 0.15s;
+}
+.rs-category:hover {
+  background: rgba(200, 169, 78, 0.06);
+}
+.rs-category-complete {
+  background: rgba(200, 169, 78, 0.08);
+}
+
+/* ── Streak Fire ── */
+@keyframes fire-pulse {
+  0%, 100% { text-shadow: 0 0 4px rgba(255, 100, 0, 0.5); transform: scale(1); }
+  50% { text-shadow: 0 0 12px rgba(255, 100, 0, 0.8), 0 0 20px rgba(255, 50, 0, 0.3); transform: scale(1.1); }
+}
+.rs-fire { animation: fire-pulse 2s ease-in-out infinite; display: inline-block; }
+
+/* ── Quest Complete Banner ── */
+@keyframes quest-flash {
+  0% { opacity: 0; transform: scale(0.85); }
+  50% { opacity: 1; transform: scale(1.03); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes gold-glow-pulse {
+  0%, 100% { text-shadow: 0 0 10px rgba(255, 215, 0, 0.5), 0 2px 4px rgba(0,0,0,0.8); }
+  50% { text-shadow: 0 0 30px rgba(255, 215, 0, 0.8), 0 0 60px rgba(255, 215, 0, 0.3), 0 2px 4px rgba(0,0,0,0.8); }
+}
+.rs-quest-complete-banner {
+  animation: quest-flash 0.6s ease-out;
+}
+.rs-quest-complete-text {
+  animation: gold-glow-pulse 2s ease-in-out infinite;
+}
+
+/* ── Calendar Day ── */
+.rs-cal-day {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  border-radius: 2px;
+  transition: all 0.2s;
+}
+.rs-cal-complete {
+  background: rgba(200, 169, 78, 0.2);
+  color: #c8a94e;
+  box-shadow: inset 0 0 6px rgba(200, 169, 78, 0.15);
+}
+.rs-cal-partial {
+  background: rgba(200, 169, 78, 0.08);
+  color: #8b7432;
+}
+.rs-cal-today {
+  border: 1px solid #c8a94e;
+  box-shadow: 0 0 8px rgba(200, 169, 78, 0.2);
+}
+
+/* ── Divider ── */
+.rs-divider {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #6b5626, transparent);
+  margin: 8px 0;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #1a1108; }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
+  background: linear-gradient(180deg, #5c4a2a, #4a3a1e);
+  border: 1px solid #6b5626;
+  border-radius: 2px;
 }
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.2);
-}
+::-webkit-scrollbar-thumb:hover { background: #6b5626; }
 
-/* Progress bar animation */
-@keyframes fill-bar {
-  from { width: 0; }
+/* ── Settings Inputs (themed) ── */
+.rs-input {
+  background: #1a1108;
+  border: 2px solid #6b5626;
+  border-radius: 2px;
+  color: #d4c4a0;
+  padding: 6px 10px;
+  font-family: 'Cinzel', serif;
+  font-size: 13px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
 }
-.animate-fill {
-  animation: fill-bar 0.6s ease-out;
+.rs-input:focus {
+  outline: none;
+  border-color: #c8a94e;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4), 0 0 8px rgba(200, 169, 78, 0.15);
 }
-
-/* Celebration entrance */
-@keyframes slide-up {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+.rs-select {
+  background: #1a1108;
+  border: 2px solid #6b5626;
+  border-radius: 2px;
+  color: #d4c4a0;
+  padding: 4px 8px;
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  cursor: pointer;
 }
-.animate-slide-up {
-  animation: slide-up 0.4s ease-out;
-}
+.rs-select:focus { outline: none; border-color: #c8a94e; }
